@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>DALL-E & Spring demo</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<main role="main" class="container">
+    <div class="starter-template">
+        <h1>DALL-E API at<br/>agile-coding.blogspot.com</h1>
+        <h2>Describe image</h2>
+        <form th:action="@{/image}" method="post">
+            <fieldset>
+                <div class="form-group">
+                    <label>
+                        <textarea type="text" name="prompt" placeholder="Ask something..." style="height: 150px" th:value="${request}" required autofocus> </textarea>
+                    </label>
+                </div>
+                <div class="row">
+                    <input type="submit" value="Send" />
+                </div>
+            </fieldset>
+        </form>
+        <h2 th:if="${imageUri != null}" >DALL-E draw for you: </h2>
+        <img th:if="${imageUri != null}" th:src="${imageUri}" alt="Picture drawn by DALL-E" />
+    </div>
+</main>
+</body>
+</html>
