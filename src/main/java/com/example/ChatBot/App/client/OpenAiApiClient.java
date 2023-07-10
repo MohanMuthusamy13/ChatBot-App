@@ -2,6 +2,7 @@ package com.example.ChatBot.App.client;
 
 import com.example.ChatBot.App.utils.OpenAiServiceType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -13,6 +14,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OpenAiApiClient {
@@ -27,11 +29,9 @@ public class OpenAiApiClient {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + openApiKey)
                 .POST(HttpRequest.BodyPublishers.ofString(requestMessage)).build();
-        System.out.println("HTTPRequest :: " + httpRequest);
-        HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());;
-        System.out.println("HTTPResponse :: " + httpResponse);
+        HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        log.info("Response :: {}", httpResponse);
         String chatGPTResponse = httpResponse.body();
-        System.out.println("ChatGPTResponse"  + chatGPTResponse);
         return chatGPTResponse;
     }
 
